@@ -1,9 +1,12 @@
 package com.yhl.mealorder.service;
 
-import com.yhl.mealorder.DTO.ItemsDTO;
+import com.yhl.mealorder.DTO.ItemDTO;
 import com.yhl.mealorder.entity.Item;
 import com.yhl.mealorder.repository.ItemRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -14,9 +17,11 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public ItemsDTO getAllItems() {
-        ItemsDTO itemsDTO = new ItemsDTO();
-        itemsDTO.setItems(itemRepository.findAll().stream().map(Item::toDTO).toList());
-        return itemsDTO;
+    public List<ItemDTO> getAllItems(Pageable pageRequest) {
+        return itemRepository.findAll(pageRequest).stream().map(Item::toDTO).toList();
+    }
+
+    public List<ItemDTO> getByTypeId(Long typeId, Pageable pageRequest) {
+        return itemRepository.findByTypeId(typeId, pageRequest).stream().map(Item::toDTO).toList();
     }
 }
