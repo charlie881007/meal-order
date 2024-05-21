@@ -23,6 +23,10 @@ public class ItemController {
             return itemService.getByTypeId(typeId, pageRequest);
         }
         return itemService.getAllItems(pageRequest);
+    }
 
+    @GetMapping("/{id}")
+    public ItemDTO getById(@PathVariable Long id) {
+        return itemService.getById(id);
     }
 }
