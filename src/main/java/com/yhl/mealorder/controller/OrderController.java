@@ -1,9 +1,7 @@
 package com.yhl.mealorder.controller;
 
-import com.yhl.mealorder.DTO.ItemDTO;
 import com.yhl.mealorder.DTO.OrderDTO;
 import com.yhl.mealorder.entity.Order;
-import com.yhl.mealorder.service.ItemService;
 import com.yhl.mealorder.service.OrderService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +24,12 @@ public class OrderController {
             return orderService.getAllOrders(pageRequest);
         }
 
-        return orderService.getByParams(status, startTime, pageRequest);
+        return orderService.getOrdersByParams(status, startTime, pageRequest);
+    }
+
+    @GetMapping("/{id}")
+    public OrderDTO getAllItems(@PathVariable Long id) {
+        return orderService.getById(id);
     }
 
 }

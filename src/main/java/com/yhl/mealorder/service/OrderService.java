@@ -2,6 +2,7 @@ package com.yhl.mealorder.service;
 
 import com.yhl.mealorder.DTO.OrderDTO;
 import com.yhl.mealorder.entity.Order;
+import com.yhl.mealorder.exception.InvalidArgumentException;
 import com.yhl.mealorder.repository.OrderRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class OrderService {
         return orderRepository.findAll(pageRequest).stream().map(Order::toDTO).toList();
     }
 
-    public List<OrderDTO> getByParams(Order.Status status, LocalDateTime startTime, Pageable pageRequest) {
+    public List<OrderDTO> getOrdersByParams(Order.Status status, LocalDateTime startTime, Pageable pageRequest) {
         //
         if (null != status && null != startTime) {
             return orderRepository.findByStatusAndCreateTimeAfter(status, startTime, pageRequest).stream().map(Order::toDTO).toList();
@@ -33,5 +34,9 @@ public class OrderService {
 
 
         return orderRepository.findByCreateTimeAfter(startTime, pageRequest).stream().map(Order::toDTO).toList();
+    }
+
+    public OrderDTO getById(Long id) {
+        return orderRepository.findById(id).orElseThrow(InvalidArgumentException::new).toDTO();
     }
 }
