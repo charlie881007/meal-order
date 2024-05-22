@@ -3,6 +3,7 @@ package com.yhl.mealorder;
 import com.yhl.mealorder.entity.Item;
 import com.yhl.mealorder.entity.ItemType;
 import com.yhl.mealorder.entity.Order;
+import com.yhl.mealorder.entity.OrderItem;
 import com.yhl.mealorder.repository.ItemRepository;
 import com.yhl.mealorder.repository.OrderRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -34,7 +35,11 @@ public class StartUpRunner implements CommandLineRunner {
         Item coffee1 = new Item("拿鐵", type_coffee, new BigDecimal("70"), "香醇可口");
         Item coffee2 = new Item("黑咖啡", type_coffee, new BigDecimal("50"), "濃韻回甘");
 
-        Order order = new Order("0912345678", List.of(tea1, coffee1), LocalDateTime.now(ZoneId.systemDefault()), Order.Status.IN_PROGRESS);
+        Order order = new Order();
+        order.setPhoneNum("0912345678");
+        order.setOrderItems(List.of(new OrderItem(order, tea1, 2), new OrderItem(order, coffee2, 1)));
+        order.setCreateTime(LocalDateTime.now(ZoneId.systemDefault()));
+        order.setStatus(Order.Status.IN_PROGRESS);
 
         itemRepository.saveAll(List.of(tea1, tea2, coffee1, coffee2));
         orderRepository.save(order);
