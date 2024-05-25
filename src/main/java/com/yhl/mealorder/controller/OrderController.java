@@ -32,4 +32,8 @@ public class OrderController {
         return orderService.getById(id);
     }
 
+    @PostMapping("/{id}/status")
+    public OrderDTO changeStatusToFinish(@PathVariable Long id) {
+        return orderService.changeStatusToFinish(id);
+    }
 }

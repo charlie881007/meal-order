@@ -6,11 +6,13 @@ import com.yhl.mealorder.exception.InvalidArgumentException;
 import com.yhl.mealorder.repository.OrderRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Transactional
 public class OrderService {
     private final OrderRepository orderRepository;
 
@@ -38,5 +40,11 @@ public class OrderService {
 
     public OrderDTO getById(Long id) {
         return orderRepository.findById(id).orElseThrow(InvalidArgumentException::new).toDTO();
+    }
+
+    public OrderDTO changeStatusToFinish(Long id) {
+        Order order = orderRepository.findByIdAndStatus(id, Order.Status.IN_PROGRESS).orElseThrow(InvalidArgumentException::new);
+        order.setStatus(Order.Status.COMPLETED);
+        return order.toDTO();
     }
 }
