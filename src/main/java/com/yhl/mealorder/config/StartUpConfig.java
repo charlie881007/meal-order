@@ -17,7 +17,7 @@ import java.util.List;
 @Component
 public class StartUpConfig {
     @Bean
-    public CommandLineRunner initStore(ItemRepository itemRepository, OrderRepository orderRepository) {
+    public CommandLineRunner initStore(ItemRepository itemRepository, OrderRepository orderRepository, PasswordEncoder encoder, UserAccountRepository userAccountRepository) {
         return args -> {
             ItemType type_tea = new ItemType("茶");
             ItemType type_coffee = new ItemType("咖啡");
@@ -28,8 +28,12 @@ public class StartUpConfig {
             Item coffee1 = new Item("拿鐵", type_coffee, new BigDecimal("70"), "香醇可口");
             Item coffee2 = new Item("黑咖啡", type_coffee, new BigDecimal("50"), "濃韻回甘");
 
+            UserAccount userAccount = new UserAccount("user", encoder.encode("user"), "USER");
+            userAccountRepository.save(userAccount);
+
             Order order = new Order();
             order.setPhoneNum("0912345678");
+            order.setUserAccount(userAccount);
             order.setOrderItems(List.of(new OrderItem(order, tea1, 2), new OrderItem(order, coffee2, 1)));
             order.setCreateTime(LocalDateTime.now(ZoneId.systemDefault()));
             order.setStatus(Order.Status.IN_PROGRESS);

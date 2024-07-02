@@ -23,6 +23,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserAccount userAccount;
+
     @NotNull
     private String phoneNum;
 

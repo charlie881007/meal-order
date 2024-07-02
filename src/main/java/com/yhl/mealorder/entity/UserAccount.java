@@ -24,6 +24,8 @@ public class UserAccount {
     private Long id;
     private String username;
     private String password;
+    @OneToMany(mappedBy = "userAccount")
+    private List<Order> orders;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<GrantedAuthority> authorities = new ArrayList<>();
 
