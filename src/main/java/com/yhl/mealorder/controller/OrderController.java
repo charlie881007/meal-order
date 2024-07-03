@@ -1,5 +1,6 @@
 package com.yhl.mealorder.controller;
 
+import com.yhl.mealorder.DTO.OrderCreationDTO;
 import com.yhl.mealorder.DTO.OrderDTO;
 import com.yhl.mealorder.entity.Order;
 import com.yhl.mealorder.service.OrderService;
@@ -30,6 +31,11 @@ public class OrderController {
     @GetMapping("/{id}")
     public OrderDTO getAllItems(@PathVariable Long id) {
         return orderService.getById(id);
+    }
+
+    @PostMapping()
+    public OrderDTO createOrder(@RequestBody OrderCreationDTO creationDTO) {
+        return orderService.createOrder(creationDTO);
     }
 
     @PostMapping("/{id}/status")
