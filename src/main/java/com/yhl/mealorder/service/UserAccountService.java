@@ -31,16 +31,15 @@ public class UserAccountService {
 
     public void register(UserRegistrationDTO registrationDTO) {
         // 重複註冊檢查
-        try {
-            findByUserName(registrationDTO.getUsername());
-        } catch (InvalidArgumentException e) {
-            // 沒註冊過
+        UserAccount userAccount = userAccountRepository.findByUsername(registrationDTO.getUsername());
+        if (userAccount != null) {
+            throw new InvalidArgumentException();
         }
 
 
         String encodedPassword = passwordEncoder.encode(registrationDTO.getPassword());
 
-        UserAccount userAccount = new UserAccount(registrationDTO.getUsername(), encodedPassword, "USER");
+        userAccount = new UserAccount(registrationDTO.getUsername(), encodedPassword, "ROLE_USER");
 
         userAccountRepository.save(userAccount);
     }

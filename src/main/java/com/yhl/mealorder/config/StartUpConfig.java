@@ -28,7 +28,7 @@ public class StartUpConfig {
             Item coffee1 = new Item("拿鐵", type_coffee, new BigDecimal("70"), "香醇可口");
             Item coffee2 = new Item("黑咖啡", type_coffee, new BigDecimal("50"), "濃韻回甘");
 
-            UserAccount userAccount = new UserAccount("user", encoder.encode("user"), "USER");
+            UserAccount userAccount = new UserAccount("user", encoder.encode("user"), "ROLE_USER");
             userAccountRepository.save(userAccount);
 
             Order order = new Order();

@@ -29,7 +29,7 @@ public class OrderItem {
     private Integer quantity;
 
     @NotNull
-    @Column(name = "amount", columnDefinition = "DECIMAL(5, 2)")
+    @Column(name = "amount", columnDefinition = "DECIMAL(7, 2)")
     private BigDecimal amount;
 
     public OrderItem(Order order, Item item, @NotNull Integer quantity) {

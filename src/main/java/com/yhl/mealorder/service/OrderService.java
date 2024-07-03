@@ -5,6 +5,7 @@ import com.yhl.mealorder.DTO.OrderDTO;
 import com.yhl.mealorder.entity.Item;
 import com.yhl.mealorder.entity.Order;
 import com.yhl.mealorder.entity.OrderItem;
+import com.yhl.mealorder.entity.UserAccount;
 import com.yhl.mealorder.exception.InvalidArgumentException;
 import com.yhl.mealorder.repository.ItemRepository;
 import com.yhl.mealorder.repository.OrderRepository;
@@ -59,7 +60,12 @@ public class OrderService {
         return order.toDTO();
     }
 
-    public OrderDTO createOrder(OrderCreationDTO orderCreationDTO) {
+    public OrderDTO createOrder(UserAccount userAccount, OrderCreationDTO orderCreationDTO) {
+        // 檢查userId參數跟JWT中的userId是不是同一人
+        if (!userAccount.getId().equals(orderCreationDTO.getUserId())) {
+            throw new InvalidArgumentException();
+        }
+
         Order order = new Order();
         List<OrderItem> orderItems = new ArrayList<>();
         Item item;

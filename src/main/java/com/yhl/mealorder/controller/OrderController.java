@@ -3,6 +3,7 @@ package com.yhl.mealorder.controller;
 import com.yhl.mealorder.DTO.OrderCreationDTO;
 import com.yhl.mealorder.DTO.OrderDTO;
 import com.yhl.mealorder.entity.Order;
+import com.yhl.mealorder.entity.UserAccount;
 import com.yhl.mealorder.service.OrderService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,8 @@ public class OrderController {
     }
 
     @PostMapping()
-    public OrderDTO createOrder(@RequestBody OrderCreationDTO creationDTO) {
-        return orderService.createOrder(creationDTO);
+    public OrderDTO createOrder(@RequestAttribute("userAccount") UserAccount userAccount, @RequestBody OrderCreationDTO creationDTO) {
+        return orderService.createOrder(userAccount, creationDTO);
     }
 
     @PostMapping("/{id}/status")
